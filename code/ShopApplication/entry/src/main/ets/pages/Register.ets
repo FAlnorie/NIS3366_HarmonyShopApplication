@@ -12,6 +12,7 @@ struct Register {
   @State successText: string = ''
 
   private doRegister(): void {
+    // 每次提交前清理上一次提示，保证反馈信息准确。
     this.errorText = ''
     this.successText = ''
 
@@ -27,6 +28,7 @@ struct Register {
     }
 
     this.successText = '注册成功，正在返回登录页'
+    // 延迟跳转让用户能看到成功反馈。
     setTimeout(() => {
       router.replaceUrl({ url: 'pages/Login' })
     }, 700)
@@ -125,4 +127,3 @@ struct Register {
     .backgroundColor('#EDF2F8')
   }
 }
-

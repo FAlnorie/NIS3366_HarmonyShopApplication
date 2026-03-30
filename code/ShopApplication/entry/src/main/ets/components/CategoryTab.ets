@@ -15,6 +15,7 @@ export struct CategoryTab {
 
         Blank()
 
+        // 右侧聚合快捷入口：用户中心 + 购物车（含数量徽标）。
         Row({ space: 8 }) {
           Text('用户中心')
             .fontSize(13)

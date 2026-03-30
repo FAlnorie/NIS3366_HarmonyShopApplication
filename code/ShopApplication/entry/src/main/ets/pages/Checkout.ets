@@ -70,6 +70,7 @@ struct Checkout {
     if (AuthStore.isLoggedIn()) {
       return true
     }
+    // 结算页同样受登录态保护。
     router.replaceUrl({ url: 'pages/Login' })
     return false
   }
@@ -78,6 +79,7 @@ struct Checkout {
     if (this.cartItems.length === 0 || this.isSubmitting) {
       return
     }
+    // 仅演示前端提交流程：提交中 -> 成功提示，不接真实支付。
     this.isSubmitting = true
     this.isSubmitSuccess = false
     setTimeout(() => {

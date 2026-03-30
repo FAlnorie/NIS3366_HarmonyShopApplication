@@ -13,6 +13,7 @@ struct Index {
   @State cartCount: number = 0
 
   aboutToAppear() {
+    // 首页作为业务主入口，进入时先做登录态校验。
     if (!this.ensureLogin()) {
       return
     }
@@ -52,6 +53,7 @@ struct Index {
     if (AuthStore.isLoggedIn()) {
       return true
     }
+    // 统一用 replaceUrl 防止返回栈回到未授权页面。
     router.replaceUrl({ url: 'pages/Login' })
     return false
   }

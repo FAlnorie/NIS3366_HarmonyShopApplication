@@ -16,6 +16,7 @@ export class AuthStore {
   private static initialized: boolean = false
 
   private static ensureInitialized(): void {
+    // 首次访问时绑定持久化键，后续直接使用 AppStorage 读写。
     if (AuthStore.initialized) {
       return
     }
@@ -53,6 +54,7 @@ export class AuthStore {
   }
 
   static getUsers(): UserAccount[] {
+    // 用户列表以 JSON 文本存储，读取后做一次结构兜底与字段清洗。
     const jsonText = AuthStore.getUsersJson()
     try {
       const parsed = JSON.parse(jsonText) as Array<Record<string, Object>>
@@ -88,6 +90,7 @@ export class AuthStore {
       return '密码至少 6 位'
     }
     const users = AuthStore.getUsers()
+    // 注册阶段直接做用户名唯一性校验，避免后续登录出现歧义。
     const exists = users.find((item: UserAccount) => item.username === cleanUsername)
     if (exists) {
       return '用户名已存在'
@@ -105,6 +108,7 @@ export class AuthStore {
     if (!target) {
       return false
     }
+    // 仅持久化当前用户名，用户详情可通过用户名回查。
     AuthStore.setCurrentUsernameRaw(target.username)
     return true
   }

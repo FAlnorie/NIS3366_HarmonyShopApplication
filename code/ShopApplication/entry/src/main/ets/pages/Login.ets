@@ -9,6 +9,7 @@ struct Login {
   @State errorText: string = ''
 
   aboutToAppear() {
+    // 已登录用户不需要重复登录，直接进入首页。
     if (AuthStore.isLoggedIn()) {
       router.replaceUrl({ url: 'pages/Index' })
     }
@@ -25,6 +26,7 @@ struct Login {
       return
     }
     this.errorText = ''
+    // 登录成功后替换当前路由，避免返回键回到登录页。
     router.replaceUrl({ url: 'pages/Index' })
   }
 
@@ -105,4 +107,3 @@ struct Login {
     .backgroundColor('#EDF2F8')
   }
 }
-

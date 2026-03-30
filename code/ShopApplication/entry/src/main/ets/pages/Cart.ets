@@ -22,6 +22,7 @@ struct Cart {
   }
 
   private reloadCart(): void {
+    // 每次刷新都重读 store，确保数量/金额与其它页面操作保持一致。
     this.cartItems = CartStore.getItems()
     this.getTotalPriceText()
   }
@@ -34,6 +35,7 @@ struct Cart {
     if (AuthStore.isLoggedIn()) {
       return true
     }
+    // 购物车属于登录态页面，未登录直接重定向。
     router.replaceUrl({ url: 'pages/Login' })
     return false
   }

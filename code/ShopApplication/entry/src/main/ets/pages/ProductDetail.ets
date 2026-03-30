@@ -13,6 +13,7 @@ struct ProductDetail {
     if (!this.ensureLogin()) {
       return
     }
+    // 详情页通过路由参数 productId 查询对应商品。
     const params = router.getParams() as Record<string, Object>
     const productId = Number(params['productId'] ?? -1)
     this.product = findProductById(productId)
@@ -39,6 +40,7 @@ struct ProductDetail {
     if (AuthStore.isLoggedIn()) {
       return true
     }
+    // 防止未登录用户直接通过路由访问详情页。
     router.replaceUrl({ url: 'pages/Login' })
     return false
   }
@@ -59,12 +61,14 @@ struct ProductDetail {
                 angle: 135,
                 colors: [['#0A223F', 0], ['#0F4C81', 0.55], ['#1A76D2', 1]]
               })
-
-              Image(this.product.image)
-                .width(230)
-                .height(230)
-                .objectFit(ImageFit.Contain)
-                .margin({ top: 72, left: 20 })
+              Row(){
+                Image(this.product.image)
+                  .width(200)
+                  .height(200)
+                  .margin({top: 70})
+              }
+              .width('100%')
+              .justifyContent(FlexAlign.Center)
 
               Row() {
                 Text('< 返回')

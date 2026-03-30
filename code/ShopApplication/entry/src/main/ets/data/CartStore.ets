@@ -19,6 +19,7 @@ export class CartStore {
   private static cartItems: CartItem[] = []
 
   static getItems(): CartItem[] {
+    // 返回新实例，避免 UI 因引用未变化而不刷新。
     return CartStore.cartItems.map((item: CartItem) => {
       return new CartItemModel(item.product, item.quantity)
     })
@@ -34,6 +35,7 @@ export class CartStore {
   }
 
   static updateQuantity(productId: number, quantity: number): void {
+    // 数量降到 0 及以下等价于移除商品。
     if (quantity <= 0) {
       CartStore.removeItem(productId)
       return

@@ -28,11 +28,13 @@ struct UserCenter {
     if (AuthStore.isLoggedIn()) {
       return true
     }
+    // 用户中心是账号页，未登录不可访问。
     router.replaceUrl({ url: 'pages/Login' })
     return false
   }
 
   private refreshView(): void {
+    // 聚合用户信息与购物车统计，保证页面展示统一。
     const user: UserAccount | undefined = AuthStore.getCurrentUser()
     if (user) {
       this.nickname = user.nickname
@@ -101,7 +103,7 @@ struct UserCenter {
           .alignItems(HorizontalAlign.Start)
         }
         .width('100%')
-        .padding({ left: 18, right: 18, top: 20, bottom: 22 })
+        .padding({ left: 18, right: 18, top: 20, bottom: 12})
         .backgroundColor('rgba(255,255,255,0.12)')
         .borderRadius(22)
         .margin({ left: 12, right: 12 })
@@ -158,7 +160,7 @@ struct UserCenter {
             .fontSize(15)
             .fontWeight(FontWeight.Medium)
             .fontColor('#0C63C5')
-            .backgroundColor('#E8F1FD')
+            .backgroundColor('#ffd6e3ff')
             .onClick(() => {
               CartStore.clear()
               this.refreshView()
@@ -177,9 +179,11 @@ struct UserCenter {
         }
         .width('100%')
         .padding({ left: 12, right: 12, top: 18 })
+        .margin({ top: '10.00vp', right: '0.00vp', bottom: '0.00vp', left: '0.00vp' })
       }
       .width('100%')
       .height('100%')
+      .margin({top: 20})
     }
     .width('100%')
     .height('100%')
