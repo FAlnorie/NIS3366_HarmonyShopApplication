@@ -161,16 +161,6 @@ struct ProductDetail {
                 CartStore.addItem(this.product, 1)
               }
             })
-
-          Button('去购物车')
-            .width(124)
-            .height(46)
-            .fontSize(15)
-            .fontWeight(FontWeight.Medium)
-            .backgroundColor('#0C63C5')
-            .onClick(() => {
-              router.pushUrl({ url: 'pages/Cart' })
-            })
         }
         .width('100%')
         .padding({ left: 16, right: 16, top: 12, bottom: 16 })

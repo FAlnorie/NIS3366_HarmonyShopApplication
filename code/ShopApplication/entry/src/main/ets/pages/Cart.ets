@@ -187,6 +187,9 @@ struct Cart {
             .fontSize(15)
             .fontWeight(FontWeight.Medium)
             .backgroundColor('#0C63C5')
+            .onClick(() => {
+              router.pushUrl({ url: 'pages/Checkout' })
+            })
         }
         .width('100%')
         .padding({ left: 16, right: 16, top: 12, bottom: 16 })

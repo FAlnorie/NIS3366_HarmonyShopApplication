@@ -2,6 +2,7 @@
   "src": [
     "pages/Index",
     "pages/ProductDetail",
-    "pages/Cart"
+    "pages/Cart",
+    "pages/Checkout"
   ]
 }
