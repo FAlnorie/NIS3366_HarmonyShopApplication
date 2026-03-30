@@ -202,3 +202,11 @@ export const productData: Record<string, Product[]> = {
     }
   ]
 }
+
+export function findProductById(productId: number): Product | undefined {
+  const allProducts: Product[] = []
+  Object.values(productData).forEach((list: Product[]) => {
+    allProducts.push(...list)
+  })
+  return allProducts.find((item: Product) => item.id === productId)
+}

@@ -1,5 +1,6 @@
 import { Product, ProductDataSource } from '../model/ProductModel'
 import { ProductCard } from './ProductCard'
+import { router } from '@kit.ArkUI'
 @Component
 export struct ProductItemList {
   @Prop @Watch('onProductDataChange') productData: Product[] // 接受父组件传入的数据 并在发生变化时自动刷新
@@ -16,6 +17,14 @@ export struct ProductItemList {
           ListItem() {
             ProductCard({item: item}) // 传入Product数据 复用ProductCard组件
           }
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/ProductDetail',
+              params: {
+                productId: item.id
+              }
+            })
+          })
           .margin({ top: 12, left: 8, right: 8 })
         }, (item: Product) => `${item.id}` )
 
@@ -47,7 +56,6 @@ export struct ProductItemList {
         this.productList.reloadData(this.productData); // 重新加载数据
       }, 1000)
     })
-
   }
   onProductDataChange() {
     if(this.productData == undefined){ // 防止报错

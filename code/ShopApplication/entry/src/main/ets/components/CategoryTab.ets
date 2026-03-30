@@ -1,6 +1,9 @@
+import { router } from '@kit.ArkUI'
+
 @Component
 export struct CategoryTab {
   @Link currentCategory: string; // 与父组件双向绑定状态变量
+  @Prop cartCount: number = 0
   @State categories: string[] = ['精选', '手机', '服饰', '电脑', '配件', '家电', '食品']
   build() {
     Column() {
@@ -9,6 +12,32 @@ export struct CategoryTab {
         Text('商店')
           .fontSize(28)
           .fontWeight(FontWeight.Medium)
+
+        Blank()
+
+        Stack({ alignContent: Alignment.TopEnd }) {
+          Text('购物车')
+            .fontSize(14)
+            .fontWeight(FontWeight.Medium)
+            .fontColor('#111111')
+            .padding({ left: 12, right: 12, top: 8, bottom: 8 })
+            .backgroundColor('#FFFFFF')
+            .borderRadius(16)
+
+          if (this.cartCount > 0) {
+            Text(`${this.cartCount}`)
+              .fontSize(10)
+              .fontWeight(FontWeight.Bold)
+              .fontColor('#FFFFFF')
+              .padding({ left: 6, right: 6, top: 2, bottom: 2 })
+              .backgroundColor('#E53935')
+              .borderRadius(10)
+              .margin({ right: -6, top: -6 })
+          }
+        }
+        .onClick(() => {
+          router.pushUrl({ url: 'pages/Cart' })
+        })
       }
       .width('100%')
       .margin({ bottom: 16 })
