@@ -1,5 +1,6 @@
 import { router } from '@kit.ArkUI'
 import { CartItem, CartStore } from '../data/CartStore'
+import { AuthStore } from '../data/AuthStore'
 
 @Entry
 @Component
@@ -7,10 +8,16 @@ struct Cart {
   @State cartItems: CartItem[] = []
   @State accountsText: string = `NULL`
   aboutToAppear() {
+    if (!this.ensureLogin()) {
+      return
+    }
     this.reloadCart()
   }
 
   onPageShow() {
+    if (!this.ensureLogin()) {
+      return
+    }
     this.reloadCart()
   }
 
@@ -21,6 +28,14 @@ struct Cart {
 
   private getTotalPriceText(): void {
     this.accountsText = `CNY ${CartStore.getTotalPrice().toFixed(2)}`
+  }
+
+  private ensureLogin(): boolean {
+    if (AuthStore.isLoggedIn()) {
+      return true
+    }
+    router.replaceUrl({ url: 'pages/Login' })
+    return false
   }
 
   build() {

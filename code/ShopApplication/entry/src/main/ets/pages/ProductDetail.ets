@@ -2,6 +2,7 @@ import { router } from '@kit.ArkUI'
 import { findProductById } from '../data/ProductData'
 import { Product } from '../model/ProductModel'
 import { CartStore } from '../data/CartStore'
+import { AuthStore } from '../data/AuthStore'
 
 @Entry
 @Component
@@ -9,6 +10,9 @@ struct ProductDetail {
   @State product?: Product = undefined
 
   aboutToAppear() {
+    if (!this.ensureLogin()) {
+      return
+    }
     const params = router.getParams() as Record<string, Object>
     const productId = Number(params['productId'] ?? -1)
     this.product = findProductById(productId)
@@ -29,6 +33,14 @@ struct ProductDetail {
 
   private getPriceText(price: number): string {
     return `CNY ${price.toFixed(2)}`
+  }
+
+  private ensureLogin(): boolean {
+    if (AuthStore.isLoggedIn()) {
+      return true
+    }
+    router.replaceUrl({ url: 'pages/Login' })
+    return false
   }
 
   build() {

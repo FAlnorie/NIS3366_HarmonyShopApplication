@@ -3,6 +3,8 @@ import { Product } from '../model/ProductModel'
 import { CategoryTab } from '../components/CategoryTab';
 import { ProductItemList } from '../components/ProductItemList'
 import { CartStore } from '../data/CartStore'
+import { AuthStore } from '../data/AuthStore'
+import { router } from '@kit.ArkUI'
 @Entry
 @Component
 struct Index {
@@ -11,10 +13,16 @@ struct Index {
   @State cartCount: number = 0
 
   aboutToAppear() {
+    if (!this.ensureLogin()) {
+      return
+    }
     this.refreshCartCount()
   }
 
   onPageShow() {
+    if (!this.ensureLogin()) {
+      return
+    }
     this.refreshCartCount()
   }
 
@@ -38,5 +46,13 @@ struct Index {
 
   private refreshCartCount() {
     this.cartCount = CartStore.getTotalCount()
+  }
+
+  private ensureLogin(): boolean {
+    if (AuthStore.isLoggedIn()) {
+      return true
+    }
+    router.replaceUrl({ url: 'pages/Login' })
+    return false
   }
 }

@@ -15,29 +15,42 @@ export struct CategoryTab {
 
         Blank()
 
-        Stack({ alignContent: Alignment.TopEnd }) {
-          Text('购物车')
-            .fontSize(14)
+        Row({ space: 8 }) {
+          Text('用户中心')
+            .fontSize(13)
             .fontWeight(FontWeight.Medium)
-            .fontColor('#111111')
+            .fontColor('#0C63C5')
             .padding({ left: 12, right: 12, top: 8, bottom: 8 })
-            .backgroundColor('#FFFFFF')
+            .backgroundColor('#E8F1FD')
             .borderRadius(16)
+            .onClick(() => {
+              router.pushUrl({ url: 'pages/UserCenter' })
+            })
 
-          if (this.cartCount > 0) {
-            Text(`${this.cartCount}`)
-              .fontSize(10)
-              .fontWeight(FontWeight.Bold)
-              .fontColor('#FFFFFF')
-              .padding({ left: 6, right: 6, top: 2, bottom: 2 })
-              .backgroundColor('#E53935')
-              .borderRadius(10)
-              .margin({ right: -6, top: -6 })
+          Stack({ alignContent: Alignment.TopEnd }) {
+            Text('购物车')
+              .fontSize(13)
+              .fontWeight(FontWeight.Medium)
+              .fontColor('#111111')
+              .padding({ left: 12, right: 12, top: 8, bottom: 8 })
+              .backgroundColor('#FFFFFF')
+              .borderRadius(16)
+
+            if (this.cartCount > 0) {
+              Text(`${this.cartCount}`)
+                .fontSize(10)
+                .fontWeight(FontWeight.Bold)
+                .fontColor('#FFFFFF')
+                .padding({ left: 6, right: 6, top: 2, bottom: 2 })
+                .backgroundColor('#E53935')
+                .borderRadius(10)
+                .margin({ right: -6, top: -6 })
+            }
           }
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/Cart' })
+          })
         }
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/Cart' })
-        })
       }
       .width('100%')
       .margin({ bottom: 16 })

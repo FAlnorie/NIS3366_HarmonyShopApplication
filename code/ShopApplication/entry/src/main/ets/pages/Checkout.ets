@@ -1,25 +1,32 @@
 import { router } from '@kit.ArkUI'
 import { CartItem, CartStore } from '../data/CartStore'
+import { AuthStore } from '../data/AuthStore'
 
 @Entry
 @Component
 struct Checkout {
   @State cartItems: CartItem[] = []
-  @State addressText: string = '上海市浦东新区锦绣路 88 号 12-1802'
-  @State receiverText: string = '张三  138****0000'
+  @State addressText: string = '上海市 闵行区 上海交通大学闵行校区'
+  @State receiverText: string = '池松泽  150****0000'
   @State selectedPayMethod: number = 0
   @State selectedDelivery: number = 0
   @State isSubmitting: boolean = false
   @State isSubmitSuccess: boolean = false
 
-  private paymentMethods: string[] = ['Harmony Pay', '银行卡', '货到付款']
+  private paymentMethods: string[] = ['微信支付', '支付宝','银行卡']
   private deliveryMethods: string[] = ['标准配送', '次日达', '门店自提']
 
   aboutToAppear() {
+    if (!this.ensureLogin()) {
+      return
+    }
     this.reloadCart()
   }
 
   onPageShow() {
+    if (!this.ensureLogin()) {
+      return
+    }
     this.reloadCart()
   }
 
@@ -57,6 +64,14 @@ struct Checkout {
 
   private getPriceText(price: number): string {
     return `CNY ${price.toFixed(2)}`
+  }
+
+  private ensureLogin(): boolean {
+    if (AuthStore.isLoggedIn()) {
+      return true
+    }
+    router.replaceUrl({ url: 'pages/Login' })
+    return false
   }
 
   private submitOrder(): void {
